@@ -1,13 +1,24 @@
+import { useState } from "react";
 import headerImgMobile from "../images/illustration-sign-up-mobile.svg";
 import headerImgDesktop from "../images/illustration-sign-up-desktop.svg";
 import checkIcon from "../images/icon-list.svg";
 
 const SignupForm = () => {
+  const [emailString, setEmailString] = useState("");
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const validateEmail = (e: any) => {
+    e.preventDefault();
+    if (!emailRegex.test(emailString)) {
+      console.log("not a valid email");
+    } else console.log("VALID EMAIL");
+  };
+
   return (
     <>
-      <div className="w-screen h-screen bg-white sm:w-11/12 md:w-11/12 md:h-11/12 lg:w-9/12 max-w-[900px] sm:max-h-[600px] sm:rounded-xl sm:p-4">
+      <div className="w-screen h-screen bg-white sm:w-11/12 md:w-11/12 md:h-11/12 lg:w-9/12 max-w-[928px] sm:max-h-[641px] sm:rounded-xl sm:p-4">
         <div className="w-full h-full flex flex-col md:flex-row-reverse md:justify-between">
-          {/* hero image */}
           <div className="md:hidden">
             <img
               src={headerImgMobile}
@@ -19,9 +30,8 @@ const SignupForm = () => {
             <img src={headerImgDesktop} alt="" className="w-full h-full" />
           </div>
 
-          {/* Main Container */}
+          {/* Header Container */}
           <div className="flex flex-col px-6 py-2 md:justify-center max-w-md">
-            {/* Header */}
             <div className="mb-4">
               <h1 className="text-3xl font-bold mb-6 md:text-5xl">
                 Stay Updated!
@@ -65,8 +75,8 @@ const SignupForm = () => {
               </ul>
             </div>
 
-            {/* Email Input */}
-            <form action="">
+            {/* Start email input */}
+            <form onSubmit={validateEmail}>
               <div>
                 <label
                   htmlFor="email"
@@ -79,18 +89,22 @@ const SignupForm = () => {
                     type="email"
                     name="email"
                     id="email"
+                    value={emailString}
+                    onChange={(e) => setEmailString(e.target.value)}
                     className="block w-full rounded-md border-0 py-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     placeholder="you@example.com"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-red-500 mt-4 bg-[#242742] text-white p-4 rounded-md hover:bg-gradient-to-b from-[#FF6A3A] to-[#FF527B] hover:shadow-[#FF527B]/50 shadow-lg hover:transition-all ease-in-out duration-300"
+                  onSubmit={validateEmail}
+                  className="w-full bg-red-500 mt-4 bg-[#242742] text-white p-4 rounded-md hover:bg-gradient-to-b from-[#FF6A3A] to-[#FF527B] hover:shadow-[#FF527B]/50 shadow-lg hover:transition-all ease-in-out"
                 >
                   Subscribe to monthly newsletter
                 </button>
               </div>
             </form>
+            {/* End email input */}
           </div>
         </div>
       </div>
